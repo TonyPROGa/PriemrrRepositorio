@@ -1,0 +1,132 @@
+{% extends "orders/base.html" %}
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+{% block title %}
+ 
+{% endblock %}
+{% block body %}
+
+    <title>Apertura de Caja</title>
+<style type="text/css">
+    body{
+        background-image: url('orders/static/fondo.png');
+        background-color: rgb(255, 94, 94);
+    }
+</style>
+<body>
+    <h1>Apertura de Caja</h1>
+    {% if monto_apertura %}
+        <p>Se abrió la caja con un monto de {{ monto_apertura }}</p>
+    {% endif %}
+    <form method="post" action="{% url 'apert_caja' %}">
+        {% csrf_token %}
+        <label for="monto">Monto de apertura:</label>
+        <input type="number" name="monto" id="monto" required>
+        <button class="btn btn-primary" type="button" onclick="mostrarMonto()">Abrir Caja</button>
+    </form>
+    <h2>CAJA ABIERTA CON</h2>
+    <label id="cajaAbiertaLabel"></label>
+    <hr>
+
+    <button class="btn btn-primary" type="submit" onclick="mostrarAlerta()">CERRAR CAJA</button>
+
+    <script>
+        function mostrarMonto() {
+            var montoIngresado = document.getElementById('monto').value;
+            document.getElementById('cajaAbiertaLabel').innerText = 'CAJA ABIERTA CON ' + montoIngresado + ' USD';
+        }
+
+        function mostrarAlerta() {
+            var montoIngresado = document.getElementById('monto').value;
+
+            if (!montoIngresado) {
+                alert('Por favor, ingresa un monto antes de cerrar la caja.');
+                return;
+            }
+
+            var respuesta = confirm('¿Deseas cerrar la caja con un monto de ' + montoIngresado + ' USD?');
+
+            if (respuesta) {
+                alert('La caja se cerró con un monto de ' + montoIngresado + ' USD');
+                window.location.replace("{% url 'index'%}");
+            } else {
+                alert('Has seleccionado "Cancelar".');
+            }
+        }
+    </script>
+</body>
+<!--<body>
+    <h1>Apertura de Caja</h1>
+    {% if monto_apertura %}
+        <p>Se abrió la caja con un monto de {{ monto_apertura }}</p>
+    {% endif %}
+    <form method="post" action="{% url 'apert_caja' %}">
+        {% csrf_token %}
+        <label for="monto">Monto de apertura:</label>
+        <input type="number" name="monto" id="monto" required>
+        <button class="btn btn-primary" type="submit">Abrir Caja</button>
+        <var> </var>
+    </form>
+    
+    <label id="montoCajaLabel"></label>
+    <hr>
+
+    <button class="btn btn-primary" type="button" onclick="mostrarAlerta()">CERRAR CAJA</button>
+
+    <script>
+        function actualizar() {
+            var montoent = document.getElementById('monto').value;
+            document.getElementById('montoCajaLabel').innerText = 'CAJA ABIERTA CON ' + montoent + ' USD';
+
+        }
+        
+        function mostrarAlerta() {
+            var montoIngresado = document.getElementById('monto').value;
+
+            if (!montoIngresado) {
+                alert('Por favor, ingresa un monto antes de cerrar la caja.');
+                return;
+            }
+
+            
+
+            var respuesta = confirm('¿Deseas cerrar la caja con un monto de ' + montoIngresado + ' USD?');
+
+            if (respuesta) {
+                alert('La caja se cerró con un monto de ' + montoIngresado + ' USD');
+            } else {
+                alert('Has seleccionado "Cancelar".');
+            }
+        }
+    </script>
+</body>-->
+<!--
+<body>
+    <h1>Apertura de Caja</h1>
+    <form method="post" action="{% url 'apert_caja' %}">
+        {% csrf_token %}
+        <label for="monto">Monto de apertura:</label>
+        <input type="number" name="monto" required>
+        <button class="btn btn-primary" type="submit">Abrir Caja</button>
+        
+    </form>
+<hr>
+
+<button class="btn btn-primary" type="submit" onclick="mostrarAlerta()">CERRAR CAJA</button>
+
+<script>
+    function mostrarAlerta() {
+        var respuesta = confirm('¿Deseas realizar esta acción?');
+
+        if (respuesta) {
+            alert('La Caja se Cerró con ',"monto");
+        } else {
+            alert('Has seleccionado "Cancelar".');
+        }
+    }
+</script>
+</body>-->
+{% endblock %}
